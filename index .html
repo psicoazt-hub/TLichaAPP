@@ -2,55 +2,57 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tortillas Licha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LichassApp Pro</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="logo.png">
     <link rel="stylesheet" href="estilos.css">
-    <link rel="manifest" href="manifest.json">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
-    <script src="app.js"></script>
 </head>
-<body>
-    <div id="header">
-        <img src="logo.png" alt="Logo" width="100">
-        <small>by Antonio Zavala Tolentino</small>
-        <h2 id="titulo-usuario">Acceso</h2>
-        <p id="reloj"></p>
-    </div>
+<body class="modo-oscuro">
+    <div class="marca-agua">LICHA</div>
+    <div id="reloj">Cargando...</div>
+    <div class="copyright">by Antonio Zavala Tolentino</div>
 
     <div id="vista-login" class="vista activa">
-        <input type="text" id="email" placeholder="Usuario / Nombre">
+        <img src="logo.png" class="logo-img">
+        <input type="text" id="user" placeholder="Usuario">
         <input type="password" id="pass" placeholder="Contraseña">
-        <button class="btn-azul" onclick="login()">ENTRAR</button>
-    </div>
-
-    <div id="vista-empleado" class="vista">
-        <button class="btn-verde" onclick="registrarEntrada()">Checar Entrada</button>
-        <button class="btn-azul" onclick="cambiarVista('vista-ventas')">Ventas</button>
-        <button class="btn-rojo" onclick="registrarSalida()">Cerrar Sesión</button>
-    </div>
-
-    <div id="vista-ventas" class="vista">
-        <div class="caja-inventario">
-            <label>Inventario:</label>
-            <input type="number" id="inv-diario" placeholder="Paquetes">
-            <button class="btn-verde" onclick="aceptarInventario()">Cargar</button>
-        </div>
-        <div id="punto-venta">
-            <input type="number" id="cant-vender" placeholder="Cantidad">
-            <input type="number" id="precio-paquete" placeholder="Precio ($)">
-            <button class="btn-azul" onclick="cerrarVenta()">Cobrar</button>
-        </div>
-        <button class="btn-gris" onclick="regresarAlMenu()">Volver</button>
+        <button onclick="iniciarSesión()">ENTRAR</button>
+        <button onclick="cambiarModo()" class="btn-secundario">Cambiar Modo 🌙/☀️</button>
     </div>
 
     <div id="vista-admin" class="vista">
-        <h3>Panel de Administración CEO</h3>
-        <button class="btn-azul" onclick="crearPerfil()">+ Crear Perfil Empleado</button>
-        <button class="btn-verde">Reportes de Inventario</button>
-        <button class="btn-naranja">Ver Asistencias</button>
-        <button class="btn-rojo" onclick="registrarSalida()">Cerrar Sesión</button>
+        <div class="card">
+            <h3>Control de Inventario</h3>
+            <input type="number" id="inv-diario" placeholder="Kg Iniciales">
+            <button onclick="enviarInventario()">CARGAR STOCK</button>
+        </div>
+        <button onclick="realizarCorte()" class="btn-verde">CORTE DE CAJA</button>
+        <button onclick="verFaltas()" class="btn-amarillo">REGISTRAR FALTAS (Calendario)</button>
+        <button onclick="gestionarEmpleados()" class="btn-azul">GESTIONAR PERSONAL</button>
+        <button onclick="salir()" class="btn-negro">CERRAR SESIÓN / REGISTRAR SALIDA</button>
     </div>
+
+    <div id="vista-empleado" class="vista">
+        <div class="card">
+            <select id="producto-tipo">
+                <option value="Tortilla Normal">Tortilla Normal</option>
+                <option value="Tortilla para Taco">Tortilla para Taco</option>
+                <option value="Tortilla Mega Burro">Tortilla Mega Burro</option>
+                <option value="Tortilla para Burro">Tortilla para Burro</option>
+                <option value="Tortilla de Trigo">Tortilla de Trigo</option>
+            </select>
+            <div class="radio-group">
+                <label><input type="radio" name="p-tipo" value="Publico" checked> Público ($22)</label>
+                <label><input type="radio" name="p-tipo" value="Ruta"> Ruta (Especial)</label>
+            </div>
+            <input type="number" id="kilos" placeholder="Kilos" step="0.1">
+            <button onclick="enviarVenta()">COBRAR Y RESPALDAR</button>
+        </div>
+        <button onclick="salir()" class="btn-negro">REGISTRAR SALIDA DIARIA</button>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
